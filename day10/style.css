@@ -1,0 +1,47 @@
+.container{
+    width: 100%;
+   
+    height: auto;
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+.card{
+    width: 400px;
+    /* background-color: yellow; */
+    border: 3px solid black;
+    border-radius: 25px;
+    padding: 6px 6px 0 6px;
+    margin: 10px;
+}
+
+img{
+    width: 100%;
+    border-radius: 25px;
+
+}
+
+i{
+    color: #d56f3e;
+}
+
+span {
+    color: #9d6f24;
+  }
+
+.title{
+    color: rgb(246, 225, 1);
+    font-weight: 800;
+    padding: 0 0 0 5px ;
+}
+
+h4{
+    text-align: right;
+    color: #3c787e;
+}
+@media(max-width : 450px){
+    .container{
+        flex-wrap: wrap;
+    }
+}

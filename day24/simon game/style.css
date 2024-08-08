@@ -1,0 +1,86 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    text-align: center;
+   
+}
+.main{
+    background-color: rgba(4, 94, 91, 0.964);
+    height: 210vh;
+    color: rgba(255, 255, 255, 0.614);
+    padding-top: 50px;
+    position: fixed;
+    top: 0;
+}
+.btn{
+    height: 8rem;
+    width: 8rem;
+    border: 5px solid black;
+    border-radius: 20%;
+    margin: 2rem 1.2rem;
+}
+
+
+
+.btn_container{
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+}
+
+.red{
+  background-color: #d95980;
+}
+
+.blue{
+ background-color:#0212428a
+}
+
+.green{
+  background-color: #63aac0;
+}
+
+.yellow{
+  background-color: #f99b45;
+}
+
+.gameflash{
+    background-color: white;
+}
+
+.userFlash{
+    background-color: green;
+}
+.red_flag{
+    background-color: red;
+}
+
+.start{
+   
+    
+    background-color: #4CAF50; 
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    margin-top: 28px;
+}
+.start:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.help{
+    /* text-decoration: none; */
+    color: rgba(127, 255, 212, 0.767);
+    position: relative;
+    top: 50px;
+}
