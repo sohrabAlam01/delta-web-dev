@@ -1,0 +1,15 @@
+{
+  "name": "import",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sohrab",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "random-words": "^2.0.1"
+  },
+  "type": "module"
+}
