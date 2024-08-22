@@ -31,6 +31,23 @@ app.get("/ig/:username", (req, res)=>{
     let followers = ["Muskan", "abc", "xyz", "sohrab"];
     res.render("instaPage.ejs", {username, followers});
 })
+
+//for instagram pages templete
+ 
+app.get("/insta/:username", (req, res)=>{
+    let instaData = require("./data.json");
+    //console.log(instaData);
+    let {username} = req.params; //collecting data accoding to the specific username
+    const data = instaData[username];
+    console.log(data);
+  if(data) res.render("instagram.ejs", {data});
+  else{
+    res.render("error.ejs");
+  }
+
+})
+
+
 app.listen(port, () => {
     console.log(`app is listening at port ${port}`);
 })

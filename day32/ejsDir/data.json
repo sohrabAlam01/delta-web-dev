@@ -1,0 +1,56 @@
+{
+    "cats": {
+        "name": "pinki",
+        "followers": 3500,
+        "following": 543,
+        "posts": [
+            {
+                "image" : "https://t3.ftcdn.net/jpg/01/74/16/14/360_F_174161495_D44ndy02LR9Isyl6ACIZs21m8WcuizGl.jpg",
+                "likes": 865,
+                "comments": 366
+            },
+            {
+                "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZYDmYNyRzoZheVVmDPUWynWSVrjmftv8wfg&s",
+                "likes": 467,
+                "comments": 976
+            },
+            {
+                "image": "https://rukminim2.flixcart.com/image/850/1000/xif0q/poster/c/s/i/medium-pefkt14005-baby-cat-cats-cute-matte-finish-poster-butcute-original-imagg8r8tjp6yfba.jpeg?q=90&crop=false",
+                "likes": 434,
+                "comments": 46
+            },
+            {
+                "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi2c5jsI67D9pqZTaXgeppvb4t6bsm0xps6qsTxsEGcCDi_F5kuMzGIZp5joiVY0qWXjI&usqp=CAU",
+                "likes": 455,
+                "comments": 50
+            }
+        ]
+    },
+    "dogs": {
+        "name": "dogesh",
+        "followers": 45,
+        "following": 400,
+        "posts": [
+            {
+                "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9GOL3EmnBioSJYAPRHJoCfKQPb9SCmkL01Q&s",
+                "likes": 55,
+                "comments": 80
+            },
+            {
+                "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
+                "likes": 76,
+                "comments": 58
+            },
+            {
+                "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSor3il6771X6fjAoJ9GOZJNJ4LniCuXRpbpVmFyGExnsJ3wTS_M0bwf8ScwXPcphHU46Q&usqp=CAU",
+                "likes": 69,
+                "comments": 43
+            },
+            {
+                "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpbufXOuygZRm3sF8-myPfQanX6pycEUWbFS02Pb36kR5o26EU1pJVqMnwYNkNP9wzNoY&usqp=CAU",
+                "likes": 90,
+                "comments": 66
+            }
+        ]
+    }
+}
