@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= post.username %>>
+    </title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .post {
+            background-color: rgba(130, 29, 29, 0.929);
+            padding: 6px;
+            margin: 4px;
+        }
+        .user {
+            font-style: italic;
+            text-decoration: underline;
+            text-decoration-color: blue;
+            color: white;
+        }
+        .content {
+            color: white;
+        }
+    </style>
+
+    
+</head>
+
+<body>
+    <p>postId: <%= post.id %>
+    </p>
+    <div class="post">
+        <h3 class="user">@<%=post.username%>
+        </h3>
+        <h5 class="content">
+            <%= post.content %>
+        </h5>
+    </div>
+</body>
+
+</html>

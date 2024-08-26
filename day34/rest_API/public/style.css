@@ -1,0 +1,19 @@
+.post{
+    background-color: rgba(130, 29, 29, 0.929);
+    padding: 6px;
+    margin: 4px;
+}
+
+.user{
+    font-style: italic;
+    text-decoration: underline;
+    text-decoration-color: blue;
+    color: white;
+}
+
+.content{
+    color: white;
+}
+a{
+    color: rgb(142, 185, 13);
+}
