@@ -13,7 +13,7 @@ const conn = mysql.createConnection({
 //let q = "SHOW TABLES";
 //inserting one record  using placeholder
  let q = "INSERT INTO USER (id, username, email, password) values (?, ?, ?, ?)";
- let users = ["123","salim", "salim@gmail.com", "12345678"];
+ let userss = ["123","salim", "salim@gmail.com", "12345678"];
 try{
  conn.query(q, user, (err, result)=>{
     if(err) throw err;
