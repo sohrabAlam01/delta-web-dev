@@ -14,8 +14,11 @@
     </style>
 </head>
 
-<body>
+<form method="get" action="/user">  
+    <button>Add User</button>
+</form>
 
+<body>
 
     <table>
         <thead>
@@ -37,12 +40,18 @@
                     <td>
                         <%= user.email %>
                     </td>
+                    <td>
+                        <form action="/user/<%=user.id%>/edit"><button>edit username</button></form>
+                    </td>
+                    <td>
+                        <form method="get" action="/user/<%=user.id%>">
+                            <button>delete</button>
+                        </form>
+                    </td>
                 </tr>
                 <% } %>
             </tbody>
     </table>
 
-
 </body>
-
 </html>
