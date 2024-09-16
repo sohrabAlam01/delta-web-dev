@@ -1,7 +1,7 @@
 //our first api request
 let url = "https://catfact.ninja/fact";
 
-/*
+
 fetch(url)
 .then((res)=>{
  //console.log(res);
@@ -13,9 +13,9 @@ fetch(url)
 .catch((err)=>{
  console.log(err);
 })
-*/
+
 //making multiple api request sequentially
-/*
+
 fetch(url)
 .then((responce)=>{
     return responce.json()
@@ -33,11 +33,11 @@ fetch(url)
 .catch((err)=>{
     console.log("ERROR", err);
 })
-*/
+
 //api request using async and await
 
 let url2 = "https://type.fit/api/quotes";
-/*
+
 
 fetch(url2)
 .then((responce)=>{
@@ -46,9 +46,7 @@ fetch(url2)
 .then((data)=>{
     console.log(data);
     console.log(data[Math.floor(Math.random()*15)].text);
-})
-
-*/
+});
 async function getQuote(){
 
    let responce = await fetch(url2);
@@ -72,7 +70,7 @@ async function getQuote(){
 getQuote();
 
 //handling error
-/*
+
 try{
     let responce = await fetch(url2);
     let data = await  responce.json();
@@ -95,4 +93,3 @@ try{
 }
 
 console.log("bye");
-*/
