@@ -12,5 +12,10 @@
     <p><%= listing.location %></p>
     <p><%= listing.country %></p>
     <img src="<%=listing.image%>" alt="">
+    <br><br>
+    <a href="/listings/<%=listing._id%>/edit">Edit the listing</a> <br><br>
+    <form method="post" action="/listings/<%=listing._id%>?_method=DELETE">
+        <button>Delete the listing</button>
+    </form>
 </body>
 </html>
