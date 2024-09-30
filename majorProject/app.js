@@ -4,6 +4,11 @@ const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride =  require('method-override');
+//setting up ejs-mate. ejs-mate is basically used as the include 
+const ejsMate = require('ejs-mate');
+app.engine("ejs", ejsMate);
+//setting up folder's path in which static files like css and js are written
+app.use(express.static(__dirname + "/public"));  //we can also use: app.use(express.static)
 //setting up ejs
 app.set("view engine", "ejs");
 

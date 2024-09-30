@@ -11,6 +11,7 @@ const sampleListings = [
         location: "Malibu",
         country: "United States",
     },
+
     {
         title: "Modern Loft in Downtown",
         description:
@@ -52,7 +53,7 @@ const sampleListings = [
         description:
             "Live among the treetops in this unique treehouse retreat. A true nature lover's paradise.",
 
-
+ 
         image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGhvdGVsc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
 
         price: 800,

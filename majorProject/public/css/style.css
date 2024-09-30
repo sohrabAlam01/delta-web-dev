@@ -1,0 +1,70 @@
+body{
+    background-color: pink;
+}
+
+.navbar{
+    height: 5rem;
+    background-color: white;
+}
+
+.fa-compass{
+    color: #fe424d;
+    font-size: 2rem;
+}
+.nav-link{
+    color: #222222 !important;
+}
+
+.main-footer{
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    bottom: 0px;
+    width: 90%;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    align-items: center;
+    margin:0 5%;
+    height: 5rem;
+    border-top: 1.5px solid rgba(128, 128, 128, 0.699);
+}
+
+.f-info-two{
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1.5rem;
+}
+
+.f-social a{
+  text-decoration: none;
+ font-size: 1.3rem;
+ margin-right: 7px;
+ color: #222222;
+ opacity: 0.8;
+align-items: center;
+}
+
+.f-social a:hover{
+    opacity: 1;
+}
+
+.lang, .inr{
+    margin-top: 5px;
+}
+
+
+
+.f-info-one a{
+    margin-right: 12px;
+    text-decoration: none !important;
+    color: rgba(54, 46, 46, 0.684);
+}
+
+.f-info-one a:hover{
+    color: rgba(54, 46, 46, 0.884);
+    text-decoration: underline !important;
+}
+.f-info-one i{
+    margin-right: 30px;
+    
+}
