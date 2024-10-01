@@ -64,7 +64,7 @@ app.get("/listings/:id", async (req, res)=>{
    await listing.save();
    res.redirect("/listings");
   })
-
+ 
 //route to render the edit form
 app.get("/listings/:id/edit",async (req, res)=>{
     let {_id} = req.params;
