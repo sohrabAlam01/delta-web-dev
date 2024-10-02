@@ -67,8 +67,8 @@ app.get("/listings/:id", async (req, res)=>{
  
 //route to render the edit form
 app.get("/listings/:id/edit",async (req, res)=>{
-    let {_id} = req.params;
-    let listing = await Listing.findById("66f7e4153be96a5563b30525");
+    let {id} = req.params;
+    let listing = await Listing.findById(id);
     //console.log(listing); 
     res.render("listings/edit.ejs", {listing});
 });
