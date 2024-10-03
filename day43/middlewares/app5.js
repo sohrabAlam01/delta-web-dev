@@ -11,6 +11,8 @@ let tokenCheck = (req , res, next)=>{
        next()
     } 
     else res.send("ACCESS DENIED!")
+    //or we also throw an error message
+    throw new Error("Access Denied")
 }
 
 let middleware2 = (req, res, next)=>{
