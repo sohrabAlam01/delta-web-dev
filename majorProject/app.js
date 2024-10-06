@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
 const path = require("path");
 const wrapAsync = require('./utils/wrapAsync.js')
+const expressError = require('./utils/expressError.js')
 const methodOverride = require('method-override');
 //setting up ejs-mate. ejs-mate is basically used as the include 
 const ejsMate = require('ejs-mate');
@@ -35,10 +36,10 @@ app.get("/", (req, res) => {
 });
 
 //index route to show all the data
-app.get("/listings", async (req, res) => {
+app.get("/listings",wrapAsync( async (req, res, next) => {
     let allListings = await Listing.find({});
     res.render("listings/allListings.ejs", { allListings });
-})
+}))
 
 
 //note: put new route above the show route bcs "/listings/:id" is confusing with "/listings/new"
@@ -46,25 +47,23 @@ app.get("/listings", async (req, res) => {
 app.get("/listings/new", (req, res) => {
     res.render("listings/newListing.ejs");
 })
+
 //show route: to show an individual listing
 
-app.get("/listings/:id", async (req, res) => {
+app.get("/listings/:id", wrapAsync(async (req, res, next) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
     res.render("listings/show.ejs", { listing });
-})
+}))
 
 
 //create route: routr to save the entered listing info
 
-
-
 app.post("/listings",wrapAsync (async (req, res, next) => {
    
         //let {title, description, price, location, country} =  req.body; //this is also a way to get the information from post request
-        // console.log(req.body.listing)
+        if(!req.body.listing) throw new expressError(400, "Bad request! Please enter a valid listing"); //if somebody sends an empty listing through direct hoppscotch
         let listing = new Listing(req.body.listing);
-        //console.log(listing);
         await listing.save();
         res.redirect("/listings");
 
@@ -72,18 +71,16 @@ app.post("/listings",wrapAsync (async (req, res, next) => {
 
 
 
-
 //route to render the edit form
-app.get("/listings/:id/edit", async (req, res) => {
+app.get("/listings/:id/edit", wrapAsync( async (req, res, next) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
-    //console.log(listing); 
     res.render("listings/edit.ejs", { listing });
-});
+}));
 
 //update route
 
-app.put("/listings/:id", wrapAsync( async (req, res) => {
+app.put("/listings/:id", wrapAsync( async (req, res, next) => {
     let { id } = req.params;
     // console.log(req.body.listing);
     //  console.log(await Listing.findById(id));
@@ -94,18 +91,25 @@ app.put("/listings/:id", wrapAsync( async (req, res) => {
 
 //delete route
 
-app.delete("/listings/:id", async (req, res) => {
+app.delete("/listings/:id", wrapAsync( async (req, res, next) => {
     let { id } = req.params;
     await Listing.findByIdAndDelete(id);
     res.redirect("/listings");
+}))
+
+//default route: when none of the above route matches with the request then this route will be called by default that means not a valid request
+
+app.all("*", (req, res, next)=>{
+    next(new expressError(404, "Page not found!"));
 })
 
-
-
-
+ 
 //middleware to handle error for any route
 app.use((err, req, res, next) => {
-    res.send("Something went wrong")  //it will take care of error at server side before saving the documents in the database like validation error, constraints etc
+   // res.send("Something went wrong")  //it will take care of error at server side before saving the documents in the database like validation error, constraints etc
+   let {statusCode = 500, message = "Something went wrong"} = err;
+   res.status(statusCode).render("./Errors/error.ejs", {statusCode, message});
+//    res.status(statusCode).send(message);
 })
 
 app.listen(8080, (req, res) => {

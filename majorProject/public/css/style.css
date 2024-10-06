@@ -181,3 +181,14 @@ img{
     padding-left: 2rem !important;
     padding-right: 2rem !important;
 }
+
+/* Error.ejs */
+.errorEjs{
+    
+    height: 60vh !important;
+    width: 80vw !important;
+    margin-left: 0 !important;
+    background-color: rgb(251, 251, 251);
+    
+  
+}
