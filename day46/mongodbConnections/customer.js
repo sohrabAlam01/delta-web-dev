@@ -39,7 +39,33 @@ let CustomerSchema = new Schema({
     ]
 })
 
-//creating model for customer scema
+
+//mogoose middlewares: 
+ /*
+CustomerSchema.pre('save', ()=>{                //this middleware is executed before whenever 'save' query is executed 
+    console.log("pre middleware is executed");
+});
+
+CustomerSchema.post('save', (data)=>{                //post middleware is executed just after 'save' query is executed
+    console.log("post middleware is executed");
+    console.log(data);
+})
+
+*/
+
+//writing mongoose middleware to delete orders associated to the customer whenever a customer gets deleted
+CustomerSchema.post('findOneAndDelete', async(customer)=>{
+    console.log(customer);
+    if(customer.orderes.length){
+        console.log("i am in");
+        let res = await Order.deleteMany({_id: {$in: customer.orderes}});
+        console.log(res);
+    }
+})
+ 
+
+
+//creating model for customer Schema
 let Customer = mongoose.model("Customer", CustomerSchema);
 
 //function to insert document into Customer
@@ -68,14 +94,14 @@ addCustomer();
 */
 
 //using populate : it will replace the reference with the entire document 
-
+/*
 let findCustomers = async ()=>{
     let Customers = await Customer.find({}).populate('orderes');
     console.log(Customers[0]);
 }
+*/
 
-
-findCustomers();
+//findCustomers();
 
 
 
@@ -94,3 +120,34 @@ let addOrders = async ()=>{
 
 addOrders();
 */
+
+//adding customer
+let addCust = async()=>{
+
+    let cust1 = new Customer({
+        name: "Shreya"
+    });
+
+    let order1 = new Order({
+        item: "Rasgulla",
+        price: 50
+    });
+  
+    cust1.orderes.push(order1);
+    await order1.save();
+    await cust1.save();
+    console.log("customer added");
+}
+
+//function to delete customer: this function will delete customer only but it will not delete the orders that are associated with it
+
+let delCust = async()=>{
+
+    let deletedData = await Customer.findByIdAndDelete('6721a8f89901496c0df5e703');   //findByIdAndDelete triggers the 'findOneAndDelete' middleware 
+    //console.log(deletedData);
+}
+
+
+
+//addCust();
+delCust();
