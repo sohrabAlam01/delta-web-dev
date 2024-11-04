@@ -6,14 +6,13 @@
 
     <div class="row mt-3 ">
         <div class="col-8 offset-3">
-            <h3>Listing details</h3>
+            <h3><%= listing.title %></h3>
         </div>
 
 
     <div class="card col-6 offset-3 mt-1">
         <img src="<%= listing.image %>" class="card-img-top show-image" alt="image">
         <div class="card-body">
-          <b><h1 class="card-title"><%= listing.title %></h1> </b> 
           <p><%= listing.description %> </p> 
           <p>&#8377;<%= listing.price.toLocaleString("en-IN") %> </p>
           <p><%= listing.location %> , <%= listing.country %></p>
@@ -31,6 +30,48 @@
 
    </div>
 
+ <!-- for review section -->
 
+  <div class="col-8 offset-3">
+
+   <hr>
+   <h5>Share your experience</h5>
+
+   <form action="/listings/<%=listing.id%>/reviews" method="POST" novalidate class="needs-validation">
+
+   <div class="mt-3 mb-3">
+    <label for="rating"><b>Rating</b></label>
+    <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range">
+   </div>
+
+<div class="mb-3 mt-3">
+  <label for="comment" class="form-label"> <b>Comment</b></label>
+  <textarea name="review[comment]" id="comment" cols="30" rows="5" placeholder="Leave your comment here" class="form-control" required></textarea>
+  <div class="invalid-feedback">Please add comment for review</div>
+</div>
+
+<button class="btn btn-outline-dark">Submit</button>
+
+</form>
+
+<hr>
+<h4>All Reviews</h4>
+   <ul>
+     <% for(review of listing.reviews){ %>
+       <li> <%= review.comment %>, <%= review.rating %> out of 5 </li>
+                                   
+     <%}%>
+   </ul>
+  </div>
   
+
+
+
+
+
+
+
+
+
+
 </body>

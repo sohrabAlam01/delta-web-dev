@@ -2,13 +2,15 @@ const express = require('express');
 const app = express();
 const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
+const Review = require("./models/review.js");
 const path = require("path");
-const { listingSchema } = require("./joiSchemaValidator.js")
+const { listingSchema, reviewSchema } = require("./joiSchemaValidator.js")
 const wrapAsync = require('./utils/wrapAsync.js')
 const expressError = require('./utils/expressError.js')
 const methodOverride = require('method-override');
 //setting up ejs-mate. ejs-mate is basically used as the include 
 const ejsMate = require('ejs-mate');
+const { findById } = require('./models/review.js');
 app.engine("ejs", ejsMate);
 //setting up folder's path in which static files like css and js are written
 app.use(express.static(__dirname + "/public"));  //we can also use: app.use(express.static)
@@ -37,9 +39,21 @@ app.get("/", (req, res) => {
 });
 
 
-//function to validate schema using joi
+//function to validate listing schema using joi
 let validateSchema = (req, res, next)=>{
         let {error} = listingSchema.validate(req.body);
+        if(error){
+            let errMsg = error.details.map((el)=> el.message).join(",")
+            throw new expressError(404, errMsg)
+        }
+        else{
+            next()
+        }
+};
+
+//function to validate listing schema using joi
+let validateReviewSchema = (req, res, next)=>{
+        let {error} = reviewSchema.validate(req.body);
         if(error){
             let errMsg = error.details.map((el)=> el.message).join(",")
             throw new expressError(404, errMsg)
@@ -66,7 +80,7 @@ app.get("/listings/new", (req, res) => {
 
 app.get("/listings/:id", wrapAsync(async (req, res, next) => {
     let { id } = req.params;
-    let listing = await Listing.findById(id);
+    let listing = await Listing.findById(id).populate("reviews");
     res.render("listings/show.ejs", { listing });
 }))
 
@@ -120,6 +134,22 @@ app.delete("/listings/:id", wrapAsync( async (req, res, next) => {
     res.redirect("/listings");
 }))
 
+
+//Reviews section routes
+
+//post route
+app.post("/listings/:id/reviews", validateReviewSchema, async(req, res) => {
+
+    const newReview = new Review(req.body.review);
+    const listing = await Listing.findById(req.params.id);
+  
+    listing.reviews.push(newReview);
+    await newReview.save();
+    await listing.save();
+
+    res.redirect(`/listings/${listing._id}`)
+   
+})
 //default route: when none of the above route matches with the request then this route will be called by default that means not a valid request
 
 app.all("*", (req, res, next)=>{
@@ -134,6 +164,11 @@ app.use((err, req, res, next) => {
    res.status(statusCode).render("./Errors/error.ejs", {statusCode, message});
 //    res.status(statusCode).send(message);
 })
+
+
+
+
+
 
 app.listen(8080, (req, res) => {
     console.log("i am listening");
