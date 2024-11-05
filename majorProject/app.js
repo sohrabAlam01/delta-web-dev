@@ -135,10 +135,10 @@ app.delete("/listings/:id", wrapAsync( async (req, res, next) => {
 }))
 
 
-//Reviews section routes
+//////////////////////////Reviews section routes//////////////////////////
 
-//post route
-app.post("/listings/:id/reviews", validateReviewSchema, async(req, res) => {
+//Review post route
+app.post("/listings/:id/reviews", validateReviewSchema, wrapAsync( async(req, res) => {
 
     const newReview = new Review(req.body.review);
     const listing = await Listing.findById(req.params.id);
@@ -149,7 +149,27 @@ app.post("/listings/:id/reviews", validateReviewSchema, async(req, res) => {
 
     res.redirect(`/listings/${listing._id}`)
    
-})
+}))
+
+
+//Review delete route
+
+app.delete("/listings/:id/reviews/:reviewId", wrapAsync(async(req, res)=>{
+               
+            let {id, reviewId} = req.params;
+            await Listing.findByIdAndUpdate(id, {$pull : {reviews: reviewId}});
+            await Review.findByIdAndDelete(reviewId);
+            res.redirect(`/listings/${id}`);
+
+}));
+
+
+
+
+
+
+
+
 //default route: when none of the above route matches with the request then this route will be called by default that means not a valid request
 
 app.all("*", (req, res, next)=>{
