@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
 const Review = require("./models/review.js");
 const path = require("path");
+const listing = require('./routes/listing.js')
 const { listingSchema, reviewSchema } = require("./joiSchemaValidator.js")
 const wrapAsync = require('./utils/wrapAsync.js')
 const expressError = require('./utils/expressError.js')
@@ -34,24 +35,19 @@ main().then(() => { })
     })
 
 
+
+
+
+//listings route file
+app.use('/listings', listing);
+
 app.get("/", (req, res) => {
     res.send("hello guys how are you");
 });
 
 
-//function to validate listing schema using joi
-let validateSchema = (req, res, next)=>{
-        let {error} = listingSchema.validate(req.body);
-        if(error){
-            let errMsg = error.details.map((el)=> el.message).join(",")
-            throw new expressError(404, errMsg)
-        }
-        else{
-            next()
-        }
-};
 
-//function to validate listing schema using joi
+//function to validate review schema using joi
 let validateReviewSchema = (req, res, next)=>{
         let {error} = reviewSchema.validate(req.body);
         if(error){
@@ -62,77 +58,9 @@ let validateReviewSchema = (req, res, next)=>{
             next()
         }
 };
-
-//index route to show all the data
-app.get("/listings",wrapAsync( async (req, res, next) => {
-    let allListings = await Listing.find({});
-    res.render("listings/allListings.ejs", { allListings });
-}))
+ 
 
 
-//note: put new route above the show route bcs "/listings/:id" is confusing with "/listings/new"
-//new route: rout to render a form to create a new listing
-app.get("/listings/new", (req, res) => {
-    res.render("listings/newListing.ejs");
-})
-
-//show route: to show an individual listing
-
-app.get("/listings/:id", wrapAsync(async (req, res, next) => {
-    let { id } = req.params;
-    let listing = await Listing.findById(id).populate("reviews");
-    res.render("listings/show.ejs", { listing });
-}))
-
-
-//create route: routr to save the entered listing info
-
-app.post("/listings", validateSchema, wrapAsync (async (req, res, next) => {
-   
-        //let {title, description, price, location, country} =  req.body; //this is also a way to get the information from post request
-       //manual way:  if(!req.body.listing) throw new expressError(400, "Bad request! Please enter a valid listing"); //if somebody sends an empty listing through direct hoppscotch
-        
-        let newListing = new Listing(req.body.listing);
-
-        /*
-        lengthy method to check validation of the intered fields before saving it
-         if(!newListing.title) throw new expressError(400, "title is missing");
-         if(!newListing.description) throw new expressError(400, "Listing is missing");
-        */ 
-       
-
-        await newListing.save();
-        res.redirect("/listings");
-
-})); 
-
-
-
-//route to render the edit form
-app.get("/listings/:id/edit", wrapAsync( async (req, res, next) => {
-    let { id } = req.params;
-    let listing = await Listing.findById(id);
-    res.render("listings/edit.ejs", { listing });
-}));
-
-//update route
-
-app.put("/listings/:id", validateSchema, wrapAsync( async (req, res, next) => {
-    let { id } = req.params;
-    // console.log(req.body.listing);
-    //  console.log(await Listing.findById(id));
-    await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-    res.redirect(`/listings/${id}`);
-}));
-
-
-//delete route
-
-app.delete("/listings/:id", wrapAsync( async (req, res, next) => {
-    let { id } = req.params;
-    await Listing.findByIdAndDelete(id);
-    res.redirect("/listings");
-}))
 
 
 //////////////////////////Reviews section routes//////////////////////////
