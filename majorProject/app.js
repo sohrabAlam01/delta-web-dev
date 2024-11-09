@@ -67,6 +67,7 @@ app.use((req, res, next)=>{
 
     res.locals.successMsg = req.flash("success");
     res.locals.errorMsg = req.flash("error");
+    res.locals.userInfo = req.user;  //req.user : it will be undefined when user is not logged in and contains user info when user is logged in
     next();
 })
 
