@@ -1,15 +1,16 @@
 const express = require('express');
 const app = express();
 const mongoose = require("mongoose");
-const Listing = require("./models/listing.js");
-const Review = require("./models/review.js");
 const path = require("path");
-const listing = require('./routes/listing.js');
-const review = require("./routes/review.js");
-const { listingSchema, reviewSchema } = require("./joiSchemaValidator.js")
-const wrapAsync = require('./utils/wrapAsync.js')
+const listingRouter = require('./routes/listing.js');
+const reviewRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js")
 const expressError = require('./utils/expressError.js')
 const methodOverride = require('method-override');
+const flash = require('connect-flash');
+const LocalStrategy = require('passport-local')
+const passport = require('passport')
+const User = require("./models/user.js")
 //setting up ejs-mate. ejs-mate is basically used as the include 
 const ejsMate = require('ejs-mate');
 const { findById } = require('./models/review.js');
@@ -34,14 +35,65 @@ main().then(() => { })
         console.log(err);
     })
 
+//setting express-session
+const session = require('express-session');
+const sessionOptions = {
+     
+     secret : "mysecretcodetoestablishthesession",
+     resave: false,
+     saveUninitialized: true,
 
+     cookie: {
+              
+        expires: Date.now() + 7*24*60*60*1000,        //login info will get expires after 7 days (given in milliseconds)
+        maxAge : 7*24*60*60*1000,
+        httpOnly: true,    //for security purpose
+     }
+
+};
+app.use(session(sessionOptions));
+app.use(flash());
+
+app.use(passport.initialize())  //initializes passport for the current session
+app.use(passport.session())
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
+//middleware to set flash message
+app.use((req, res, next)=>{
+
+    res.locals.successMsg = req.flash("success");
+    res.locals.errorMsg = req.flash("error");
+    next();
+})
+
+//demo user route
+
+app.get("/demouser", async(req, res)=>{
+      
+     let fakeUser = new User({
+
+        email: "salimtauheed2002@gmail.com",
+        username: "Muskan"
+
+     });
+
+     let userRegistered = await User.register(fakeUser, "Salim@123");
+     res.send(userRegistered);
+       
+})
 
 
 //listings route file
-app.use('/listings', listing);
+app.use('/listings', listingRouter);
 
 //reviews routes file
-app.use('/listings/:id/reviews', review);
+app.use('/listings/:id/reviews', reviewRouter);
+
+app.use("/", userRouter);
 
 app.get("/", (req, res) => {
     res.send("hello guys how are you");
