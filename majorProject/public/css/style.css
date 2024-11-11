@@ -192,3 +192,34 @@ img{
     
   
 }
+
+.logo{
+    height: 150px !important;
+    width: 150px !important;
+    margin-left: 1rem !important;
+}
+
+.explore-btn {
+    padding: 12px 24px;               /* Adds padding for a comfortable click area */
+    background-color: #4CAF50;        /* Primary color (green in this case) */
+    color: #fff;                      /* Text color */
+    font-size: 16px;                  /* Font size */
+    font-weight: bold;                /* Bold text */
+    border: none;                     /* Removes default border */
+    border-radius: 8px;               /* Adds rounded corners */
+    cursor: pointer;                  /* Changes cursor to pointer */
+    transition: all 0.3s ease;        /* Smooth transition for hover effect */
+    text-transform: uppercase;        /* Makes text uppercase */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Adds subtle shadow */
+  }
+  
+  .explore-btn:hover {
+    background-color: #45a049;        /* Darkens the color on hover */
+    transform: scale(1.05);           /* Slightly increases size on hover */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Adds deeper shadow on hover */
+  }
+  
+  .explore-btn:active {
+    transform: scale(0.98);           /* Shrinks slightly when clicked */
+  }
+  

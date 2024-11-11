@@ -1,3 +1,10 @@
+if(process.env.NODE_ENV != "production") {
+
+    require('dotenv').config();
+
+}
+
+
 const express = require('express');
 const app = express();
 const mongoose = require("mongoose");
@@ -25,10 +32,12 @@ app.set("views", __dirname + "/views");          //app.set("views", path.join(__
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
-//creating and connecting database happyHaven 
+
+//creating and connecting database happyHaven (atlas mongodb)
+const dbUrl = process.env.ATLASDB_URL
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/happyhaven');
-}
+    await mongoose.connect(dbUrl); 
+} 
 
 main().then(() => { })
     .catch((err) => {
@@ -37,9 +46,23 @@ main().then(() => { })
 
 //setting express-session
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto:{
+        secret: process.env.SECRET
+    },
+    touchAfter: 24 * 3600
+});
+
+store.on("error", ()=>{
+    console.log("ERROR IN MONGO SESSION STORE", err)
+})
+
 const sessionOptions = {
-     
-     secret : "mysecretcodetoestablishthesession",
+     store,
+     secret :  process.env.SECRET,
      resave: false,
      saveUninitialized: true,
 
@@ -51,6 +74,8 @@ const sessionOptions = {
      }
 
 };
+
+
 app.use(session(sessionOptions));
 app.use(flash());
 
@@ -71,21 +96,6 @@ app.use((req, res, next)=>{
     next();
 })
 
-//demo user route
-
-app.get("/demouser", async(req, res)=>{
-      
-     let fakeUser = new User({
-
-        email: "salimtauheed2002@gmail.com",
-        username: "Muskan"
-
-     });
-
-     let userRegistered = await User.register(fakeUser, "Salim@123");
-     res.send(userRegistered);
-       
-})
 
 
 //listings route file
@@ -95,11 +105,6 @@ app.use('/listings', listingRouter);
 app.use('/listings/:id/reviews', reviewRouter);
 
 app.use("/", userRouter);
-
-app.get("/", (req, res) => {
-    res.send("hello guys how are you");
-});
-
 
 
 
