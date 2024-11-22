@@ -1,8 +1,13 @@
 import { useState } from "react";
 
 export default function Ludomove(){
- 
+     
+   //object as a state variable
      let [moves, setMoves] = useState({blue: 0, green: 0, yellow: 0, red: 0});
+
+   //array as a state variable
+    let[arr, setArr] = useState(["no moves,"]);
+
 
      let moveBlue = () => {
    
@@ -11,15 +16,19 @@ export default function Ludomove(){
         setMoves({...moves, blue: moves.blue+1});    //since re-render happens only when state variable value is changed but in object if only member is updated then it will not change the reference of the original object so that's why to reflect the change we have to copy the entire object after changing the member value
         */
        //since setMoves is a synchronous function that's why we have to use call back to execute it in order to avoid the unpredicted result 
-     setMoves((prevMoves => {
+     setMoves((prevMoves) => {
         return {...moves, blue: moves.blue+1}
-     }));
+     });
        
+      setArr(()=>{
+         return [...arr, "blue move"]
+      })
+
      };
 
 
      let moveRed = ()=>{
-        setMoves((prevMoves)=>{
+        setMoves(()=>{
             return {...moves, red: moves.red + 1}
         })
      };
@@ -38,6 +47,7 @@ export default function Ludomove(){
 
      return (
         <div>
+         <p>{arr}</p>
         <p>Blue moves = {moves.blue}</p>
         <button style={{backgroundColor: "blue"}} onClick={moveBlue}>+1</button>
         <p>Green moves = {moves.green} </p>
