@@ -24,8 +24,7 @@ export default function MaterialUi(){
           setValue(newValue); 
           console.log(newValue);
         }}
-      />
-      
+      /> 
     </Box>
         </>
        

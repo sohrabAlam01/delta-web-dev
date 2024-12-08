@@ -1,0 +1,9 @@
+.info-box{
+  /* position: relative;
+  top: 50px;
+  left: 545px;
+ text-align: center;
+  width:fit-content; */
+  display: flex;
+  justify-content: center;
+}
