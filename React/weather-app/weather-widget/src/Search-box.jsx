@@ -18,6 +18,7 @@ export default function SearchBox() {
         let responce = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`)
         let jsonResponce = await responce.json();
         let result = {
+             city: city,
              temp : jsonResponce.main.temp,
              feelsLike: jsonResponce.main.feels_like,
              humidity: jsonResponce.main.humidity,

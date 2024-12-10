@@ -3,16 +3,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import './InfoBox.css'
-export default function Infobox() {
+export default function Infobox({info}) {
 
-    let info = {
-        feelsLike: 19.99,
-        humidity: 30,
-        maxTemp: 21.05,
-        minTemp: 21.05,
-        temp: 21.05,
-        weather: "haze"
-    }
 
     return (
         <>
@@ -26,7 +18,7 @@ export default function Infobox() {
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                        {info.weather}
+                        {info.city}
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }} component={"span"}>
                        <p>Tempreture: {info.temp}&deg;C</p> 
