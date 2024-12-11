@@ -1,20 +1,26 @@
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import './SearchBox.css'
+import './SearchBox.css' 
 import { useState } from 'react';
 
 
-export default function SearchBox() {
+export default function SearchBox({updateWeater}) {
 
     let [city, setCity] = useState("");
+    let [ERROR, setError] = useState(false);
     const API_KEY = "36afe95ae0d35e2fe3f1a10a92df88ab"
-
+  
+     
+     
     function handleChange(event) {
         setCity(event.target.value)
     }
     
       
   let getWeather = async()=>{
+    try{
+
+        setError(false);
         let responce = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`)
         let jsonResponce = await responce.json();
         let result = {
@@ -27,15 +33,23 @@ export default function SearchBox() {
              weather: jsonResponce.weather[0].description
         }
         // console.log(jsonResponce);
-        console.log(result)
+        // console.log(result)
+        return result;
+    }catch(err){
+        throw err;
+    }
      }
 
 
-    function handleDefault(event) {
+    async function handleDefault(event) {
+        try{
         event.preventDefault();
-        console.log(city)
         setCity("")
-        getWeather();
+        let info = await getWeather();
+        updateWeater(info);
+        }catch(err){
+            setError(true);
+        }
     }
 
 
@@ -47,6 +61,8 @@ export default function SearchBox() {
                 <br/><br/> 
                 <Button variant="contained" type="submit" >Search </Button>
             </form>
+
+            {ERROR && <p style={{color : "red"}}>Data is not available for this place</p>}
         </div>
     )
 }

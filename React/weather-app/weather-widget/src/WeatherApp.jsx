@@ -14,10 +14,17 @@ export default function WeatherApp(){
       weather: "haze"
   });
  
+  function updateInfo(newWeather){
+
+     setWeatherInfo(newWeather);
+
+  }
+
+
       return(
         <div>
              <h2>Weather app by Sohrab</h2>
-             <SearchBox /> 
+             <SearchBox updateWeater = {updateInfo} />  
              <br /><br />
              <Infobox info = {weatherInfo}/>
         </div>
